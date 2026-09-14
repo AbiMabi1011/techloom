@@ -6,10 +6,6 @@ node_modules/
 # Testing
 coverage/
 
-# Production Build Artifacts
-dist/
-build/
-
 # Misc & IDE
 .DS_Store
 *.pem
