@@ -68,15 +68,15 @@ export default function ProductGrid({
   }, [products, sortBy, stockOnly, maxPrice]);
 
   return (
-    <div id="catalog-section" className="max-w-7xl mx-auto px-6 py-12">
+    <div id="catalog-section" className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       {/* Top Header & Overview */}
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-8 pb-6 border-b border-white/10">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 sm:gap-6 mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-white/10">
         <div>
-          <div className="flex items-center gap-3">
-            <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-white tracking-tight">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <h2 className="text-xl sm:text-3xl font-display font-extrabold text-white tracking-tight">
               Curated Catalog
             </h2>
-            <span className="text-xs px-2.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/20 text-amber-400 font-mono font-bold">
+            <span className="text-[11px] sm:text-xs px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-400/10 border border-amber-400/20 text-amber-400 font-mono font-bold">
               {filteredProducts.length} Products
             </span>
           </div>
@@ -86,7 +86,7 @@ export default function ProductGrid({
         </div>
 
         {/* Controls Toolbar: View Switcher, Stock Filter, Price Slider & Sort */}
-        <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto justify-between lg:justify-end">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full lg:w-auto justify-between lg:justify-end">
           
           {/* Grid vs List View Switcher */}
           <div className="flex items-center bg-[#151B26] p-1 rounded-xl border border-white/10">
@@ -121,18 +121,19 @@ export default function ProductGrid({
           {/* In-Stock Toggle */}
           <button
             onClick={() => setStockOnly(!stockOnly)}
-            className={`text-xs px-3.5 py-2 rounded-xl border flex items-center gap-2 transition-all ${
+            className={`text-xs px-3 sm:px-3.5 py-2 rounded-xl border flex items-center gap-1.5 sm:gap-2 transition-all ${
               stockOnly
                 ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 font-semibold'
                 : 'bg-white/5 border-white/10 text-slate-400 hover:text-white'
             }`}
           >
             <span className={`w-2 h-2 rounded-full ${stockOnly ? 'bg-emerald-400 animate-ping' : 'bg-slate-500'}`}></span>
-            <span>In-Stock Only</span>
+            <span className="hidden sm:inline">In-Stock Only</span>
+            <span className="sm:hidden">In-Stock</span>
           </button>
 
           {/* Price Range Slider Quick Filter */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#151B26] border border-white/10 text-xs text-slate-300">
+          <div className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#151B26] border border-white/10 text-xs text-slate-300">
             <span>Max: <strong className="text-amber-400 font-mono">${maxPrice}</strong></span>
             <input
               type="range"
@@ -141,7 +142,7 @@ export default function ProductGrid({
               step="10"
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
-              className="w-20 accent-amber-400 cursor-pointer"
+              className="w-16 sm:w-20 accent-amber-400 cursor-pointer"
             />
           </div>
 
@@ -150,15 +151,15 @@ export default function ProductGrid({
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-[#151B26] border border-white/10 text-xs text-slate-200 py-2 pl-3 pr-8 rounded-xl focus:outline-none focus:border-amber-400 cursor-pointer appearance-none"
+              className="bg-[#151B26] border border-white/10 text-xs text-slate-200 py-2 pl-2.5 sm:pl-3 pr-7 sm:pr-8 rounded-xl focus:outline-none focus:border-amber-400 cursor-pointer appearance-none"
             >
-              <option value="featured">Sort: Featured</option>
+              <option value="featured">Featured</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
               <option value="stock">Stock Availability</option>
               <option value="name">Alphabetical</option>
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400 text-[10px]">
               ▼
             </div>
           </div>
