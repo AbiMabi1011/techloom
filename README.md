@@ -108,5 +108,4 @@ from Task 01, with its own managed MySQL database and `DATABASE_URL`.
 Deploy `/frontend` to Vercel/Netlify with `VITE_API_BASE_URL` pointing at
 the deployed backend URL.
 
-**Backend live URL:** _add after deployment_
-**Frontend live URL:** _add after deployment_
+live URL: https://techloom.abishanan.dev/
