@@ -3,6 +3,7 @@ import { api } from '../api';
 
 export default function AdminPanel({ onNavigate, onProductsChange }) {
   const [activeTab, setActiveTab] = useState('inventory'); // 'inventory' | 'orders' | 'customers' | 'coupons' | 'simulator' | 'analytics' | 'settings'
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -389,24 +390,47 @@ export default function AdminPanel({ onNavigate, onProductsChange }) {
         </div>
       )}
 
+      {/* Mobile Sidebar Overlay Backdrop */}
+      {isMobileSidebarOpen && (
+        <div
+          onClick={() => setIsMobileSidebarOpen(false)}
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 lg:hidden animate-fade-in"
+        />
+      )}
+
       {/* ========================================================
-          LEFT ADMIN SIDEBAR
+          LEFT ADMIN SIDEBAR (Responsive drawer on mobile)
           ======================================================== */}
-      <aside className="w-72 bg-[#0B0F17] border-r border-white/10 flex flex-col shrink-0 min-h-screen sticky top-0 h-screen z-30">
+      <aside
+        className={`fixed lg:sticky top-0 left-0 h-screen w-72 bg-[#0B0F17] border-r border-white/10 flex flex-col shrink-0 z-50 transition-transform duration-300 ease-in-out ${
+          isMobileSidebarOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full lg:translate-x-0'
+        }`}
+      >
         {/* Brand Header */}
-        <div className="p-6 border-b border-white/10 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 text-slate-950 flex items-center justify-center font-black text-xl shadow-[0_0_25px_rgba(245,158,11,0.35)] shrink-0">
-            ⚡
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-display text-base font-black tracking-wider text-white">TECHLOOM</span>
-              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-400/10 text-amber-300 border border-amber-400/20 font-bold">
-                PRO
-              </span>
+        <div className="p-5 sm:p-6 border-b border-white/10 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 text-slate-950 flex items-center justify-center font-black text-lg sm:text-xl shadow-[0_0_25px_rgba(245,158,11,0.35)] shrink-0">
+              ⚡
             </div>
-            <p className="text-[11px] font-mono text-slate-500 tracking-tight">ADMIN CONTROL PANEL</p>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span className="font-display text-base font-black tracking-wider text-white">TECHLOOM</span>
+                <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-400/10 text-amber-300 border border-amber-400/20 font-bold">
+                  PRO
+                </span>
+              </div>
+              <p className="text-[10px] sm:text-[11px] font-mono text-slate-500 tracking-tight">ADMIN CONTROL PANEL</p>
+            </div>
           </div>
+
+          {/* Close drawer button for mobile */}
+          <button
+            onClick={() => setIsMobileSidebarOpen(false)}
+            className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10"
+            title="Close menu"
+          >
+            ✕
+          </button>
         </div>
 
         {/* Quick Back-to-Storefront Link */}
@@ -426,7 +450,7 @@ export default function AdminPanel({ onNavigate, onProductsChange }) {
         {/* Sidebar Navigation Section */}
         <div className="flex-1 overflow-y-auto px-4 py-3 space-y-1.5 scrollbar-thin scrollbar-thumb-white/10">
           <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 pb-2">
-            Operations & Controls
+            Operations &amp; Controls
           </div>
 
           {navItems.map((item) => {
@@ -434,7 +458,10 @@ export default function AdminPanel({ onNavigate, onProductsChange }) {
             return (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id)}
+                onClick={() => {
+                  setActiveTab(item.id);
+                  setIsMobileSidebarOpen(false);
+                }}
                 className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-xs font-semibold transition-all text-left ${
                   isActive
                     ? 'bg-amber-400 text-slate-950 font-bold shadow-[0_4px_20px_rgba(245,158,11,0.25)] ring-1 ring-amber-300/50'
@@ -503,21 +530,32 @@ export default function AdminPanel({ onNavigate, onProductsChange }) {
           ======================================================== */}
       <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
         {/* Top Operational Bar inside Admin */}
-        <header className="h-16 px-8 border-b border-white/10 bg-[#0B0F17]/80 backdrop-blur-md sticky top-0 z-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <h2 className="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
-              <span className="text-amber-400">
+        <header className="h-16 px-4 sm:px-8 border-b border-white/10 bg-[#0B0F17]/80 backdrop-blur-md sticky top-0 z-20 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            {/* Mobile Hamburger Drawer Toggle Button */}
+            <button
+              onClick={() => setIsMobileSidebarOpen(true)}
+              className="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
+              title="Open Navigation"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+
+            <h2 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5 sm:gap-2 truncate">
+              <span className="text-amber-400 shrink-0">
                 {navItems.find((n) => n.id === activeTab)?.icon}
               </span>
-              <span>{navItems.find((n) => n.id === activeTab)?.label}</span>
+              <span className="truncate">{navItems.find((n) => n.id === activeTab)?.label}</span>
             </h2>
-            <span className="hidden sm:inline text-xs text-slate-500">|</span>
-            <span className="hidden sm:inline text-xs text-slate-400">
+            <span className="hidden md:inline text-xs text-slate-500">|</span>
+            <span className="hidden md:inline text-xs text-slate-400 truncate">
               Live Database Active &bull; MySQL ACID Isolation
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
               onClick={() => {
                 setEditingProduct(null);
@@ -531,17 +569,18 @@ export default function AdminPanel({ onNavigate, onProductsChange }) {
                 });
                 setIsModalOpen(true);
               }}
-              className="px-4 py-2 rounded-xl text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-[0_4px_15px_rgba(245,158,11,0.3)] transition-all flex items-center gap-1.5 active:scale-95"
+              className="px-3 sm:px-4 py-2 rounded-xl text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-[0_4px_15px_rgba(245,158,11,0.3)] transition-all flex items-center gap-1.5 active:scale-95"
             >
-              <span>+ Add Tech Product</span>
+              <span>+ Add</span>
+              <span className="hidden sm:inline">Tech Product</span>
             </button>
           </div>
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 p-8 space-y-8 max-w-[1400px] w-full">
+        <main className="flex-1 p-4 sm:p-8 space-y-6 sm:space-y-8 max-w-[1400px] w-full">
           {/* KPI Stats Overview Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             <div className="glass-panel p-5 rounded-2xl border border-white/10 space-y-1">
               <span className="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Total Revenue</span>
               <div className="text-2xl font-display font-black text-emerald-400">

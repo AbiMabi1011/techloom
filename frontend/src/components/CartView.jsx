@@ -210,10 +210,10 @@ export default function CartView({ cart, onUpdateQty, onRemove, onCheckout, busy
             {items.map((item) => (
               <div
                 key={item.id}
-                className="glass-panel rounded-2xl p-4 sm:p-5 flex items-center gap-4 border border-white/10 hover:border-white/20 transition-all"
+                className="glass-panel rounded-2xl p-3 sm:p-5 flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-4 border border-white/10 hover:border-white/20 transition-all"
               >
                 {/* Thumb */}
-                <div className="w-16 h-16 rounded-xl bg-slate-900 overflow-hidden flex items-center justify-center shrink-0 border border-white/10">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-slate-900 overflow-hidden flex items-center justify-center shrink-0 border border-white/10">
                   {item.product.imageUrl ? (
                     <img src={item.product.imageUrl} alt={item.product.name} className="w-full h-full object-cover" />
                   ) : (
@@ -222,43 +222,46 @@ export default function CartView({ cart, onUpdateQty, onRemove, onCheckout, busy
                 </div>
 
                 {/* Details */}
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-semibold text-white truncate">{item.product.name}</h4>
-                  <span className="text-xs text-slate-400">${Number(item.product.price).toFixed(2)} each</span>
+                <div className="flex-1 min-w-[140px] sm:min-w-0">
+                  <h4 className="text-xs sm:text-sm font-semibold text-white truncate">{item.product.name}</h4>
+                  <span className="text-[11px] sm:text-xs text-slate-400">${Number(item.product.price).toFixed(2)} each</span>
                 </div>
 
-                {/* Stepper */}
-                <div className="flex items-center gap-2 bg-black/40 border border-white/10 rounded-lg p-1">
+                {/* Stepper & Total on Mobile */}
+                <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto mt-2 sm:mt-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/5">
+                  {/* Stepper */}
+                  <div className="flex items-center gap-1.5 sm:gap-2 bg-black/40 border border-white/10 rounded-lg p-1">
+                    <button
+                      onClick={() => onUpdateQty(item.productId, Math.max(0, item.quantity - 1))}
+                      className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded text-slate-400 hover:text-white hover:bg-white/10 transition-colors text-xs"
+                    >
+                      -
+                    </button>
+                    <span className="w-5 sm:w-6 text-center text-xs font-bold text-white">{item.quantity}</span>
+                    <button
+                      onClick={() => onUpdateQty(item.productId, item.quantity + 1)}
+                      className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded text-slate-400 hover:text-white hover:bg-white/10 transition-colors text-xs"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  {/* Item total */}
+                  <div className="text-right min-w-[60px] sm:min-w-[70px]">
+                    <span className="text-xs sm:text-sm font-bold text-white">
+                      ${(Number(item.product.price) * item.quantity).toFixed(2)}
+                    </span>
+                  </div>
+
+                  {/* Remove button */}
                   <button
-                    onClick={() => onUpdateQty(item.productId, Math.max(0, item.quantity - 1))}
-                    className="w-7 h-7 flex items-center justify-center rounded text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                    onClick={() => onRemove(item.productId)}
+                    className="text-slate-500 hover:text-rose-400 transition-colors p-1"
+                    title="Remove item"
                   >
-                    -
-                  </button>
-                  <span className="w-6 text-center text-xs font-bold text-white">{item.quantity}</span>
-                  <button
-                    onClick={() => onUpdateQty(item.productId, item.quantity + 1)}
-                    className="w-7 h-7 flex items-center justify-center rounded text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
-                  >
-                    +
+                    ✕
                   </button>
                 </div>
-
-                {/* Item total */}
-                <div className="text-right min-w-[70px]">
-                  <span className="text-sm font-bold text-white">
-                    ${(Number(item.product.price) * item.quantity).toFixed(2)}
-                  </span>
-                </div>
-
-                {/* Remove button */}
-                <button
-                  onClick={() => onRemove(item.productId)}
-                  className="text-slate-500 hover:text-rose-400 transition-colors p-1"
-                  title="Remove item"
-                >
-                  ✕
-                </button>
               </div>
             ))}
           </div>

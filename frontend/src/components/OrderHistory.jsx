@@ -31,10 +31,10 @@ const STATUS_BADGE = {
 
 export default function OrderHistory({ orders, loading, onCancel, onRefund, busy }) {
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12 animate-fade-in">
-      <div className="flex items-center justify-between pb-6 border-b border-white/10 mb-8">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 animate-fade-in">
+      <div className="flex items-center justify-between pb-4 sm:pb-6 border-b border-white/10 mb-6 sm:mb-8">
         <div>
-          <h2 className="font-display text-3xl font-extrabold text-white">Order History &amp; Audits</h2>
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white">Order History &amp; Audits</h2>
           <p className="text-xs text-slate-400 mt-1">
             Track real-time state transitions, idempotency records, and instant refunds.
           </p>

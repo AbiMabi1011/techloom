@@ -87,71 +87,74 @@ export default function ProfileModal({
         <div className="flex-1 overflow-y-auto flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-white/10">
           
           {/* Left Tab Nav */}
-          <div className="w-full md:w-64 p-4 bg-[#0D111A]/60 shrink-0 space-y-1">
+          <div className="w-full md:w-64 p-3 sm:p-4 bg-[#0D111A]/60 shrink-0 space-y-1">
             {/* User Quick Info Badge */}
-            <div className="p-3 mb-4 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
+            <div className="p-2.5 sm:p-3 mb-2 sm:mb-4 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
               <img
                 src={profileData.avatarUrl}
                 alt="Avatar"
-                className="w-12 h-12 rounded-full object-cover border border-amber-400/40 shadow-sm"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border border-amber-400/40 shadow-sm"
               />
               <div className="min-w-0 flex-1">
-                <div className="text-sm font-bold text-white truncate">{profileData.name}</div>
-                <div className="text-[11px] text-amber-400 font-medium">Verified Member</div>
-                <div className="text-[10px] text-slate-400">{ordersCount} Total Orders</div>
+                <div className="text-xs sm:text-sm font-bold text-white truncate">{profileData.name}</div>
+                <div className="text-[10px] sm:text-[11px] text-amber-400 font-medium">Verified Member</div>
+                <div className="text-[9px] sm:text-[10px] text-slate-400">{ordersCount} Total Orders</div>
               </div>
             </div>
 
-            <button
-              onClick={() => setActiveTab('account')}
-              className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-3 transition-all ${
-                activeTab === 'account'
-                  ? 'bg-amber-400 text-slate-950 font-bold shadow-md'
-                  : 'text-slate-300 hover:bg-white/5 hover:text-white'
-              }`}
-            >
-              <span>👤</span>
-              <span>Profile Information</span>
-            </button>
+            {/* Tabs List (Horizontal scroll on mobile, vertical stack on desktop) */}
+            <div className="flex md:flex-col gap-1 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
+              <button
+                onClick={() => setActiveTab('account')}
+                className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 sm:gap-3 transition-all shrink-0 whitespace-nowrap ${
+                  activeTab === 'account'
+                    ? 'bg-amber-400 text-slate-950 font-bold shadow-md'
+                    : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                }`}
+              >
+                <span>👤</span>
+                <span>Profile Info</span>
+              </button>
 
-            <button
-              onClick={() => setActiveTab('shipping')}
-              className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-3 transition-all ${
-                activeTab === 'shipping'
-                  ? 'bg-amber-400 text-slate-950 font-bold shadow-md'
-                  : 'text-slate-300 hover:bg-white/5 hover:text-white'
-              }`}
-            >
-              <span>📍</span>
-              <span>Addresses &amp; Shipping</span>
-            </button>
+              <button
+                onClick={() => setActiveTab('shipping')}
+                className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 sm:gap-3 transition-all shrink-0 whitespace-nowrap ${
+                  activeTab === 'shipping'
+                    ? 'bg-amber-400 text-slate-950 font-bold shadow-md'
+                    : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                }`}
+              >
+                <span>📍</span>
+                <span>Addresses</span>
+              </button>
 
-            <button
-              onClick={() => setActiveTab('preferences')}
-              className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-3 transition-all ${
-                activeTab === 'preferences'
-                  ? 'bg-amber-400 text-slate-950 font-bold shadow-md'
-                  : 'text-slate-300 hover:bg-white/5 hover:text-white'
-              }`}
-            >
-              <span>⚙️</span>
-              <span>Preferences &amp; Regional</span>
-            </button>
+              <button
+                onClick={() => setActiveTab('preferences')}
+                className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 sm:gap-3 transition-all shrink-0 whitespace-nowrap ${
+                  activeTab === 'preferences'
+                    ? 'bg-amber-400 text-slate-950 font-bold shadow-md'
+                    : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                }`}
+              >
+                <span>⚙️</span>
+                <span>Preferences</span>
+              </button>
 
-            <button
-              onClick={() => setActiveTab('security')}
-              className={`w-full px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-3 transition-all ${
-                activeTab === 'security'
-                  ? 'bg-amber-400 text-slate-950 font-bold shadow-md'
-                  : 'text-slate-300 hover:bg-white/5 hover:text-white'
-              }`}
-            >
-              <span>🛡️</span>
-              <span>Security &amp; API Keys</span>
-            </button>
+              <button
+                onClick={() => setActiveTab('security')}
+                className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 sm:gap-3 transition-all shrink-0 whitespace-nowrap ${
+                  activeTab === 'security'
+                    ? 'bg-amber-400 text-slate-950 font-bold shadow-md'
+                    : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                }`}
+              >
+                <span>🛡️</span>
+                <span>Security</span>
+              </button>
+            </div>
 
             {/* Session Token Box */}
-            <div className="pt-4 mt-4 border-t border-white/10">
+            <div className="pt-2 sm:pt-4 mt-2 sm:mt-4 border-t border-white/10 hidden sm:block">
               <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider block mb-1">
                 Client Session ID
               </span>

@@ -13,7 +13,7 @@ export default function ProductModal({ product, isOpen, onClose, onAdd }) {
       ></div>
 
       {/* Modal Box */}
-      <div className="relative w-full max-w-3xl glass-panel rounded-3xl border border-white/15 overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.8)] z-10 animate-slide-up flex flex-col md:flex-row">
+      <div className="relative w-full max-w-3xl max-h-[90vh] glass-panel rounded-3xl border border-white/15 overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.8)] z-10 animate-slide-up flex flex-col md:flex-row">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -23,7 +23,7 @@ export default function ProductModal({ product, isOpen, onClose, onAdd }) {
         </button>
 
         {/* Product Image Column */}
-        <div className="md:w-1/2 aspect-square md:aspect-auto bg-slate-950 relative overflow-hidden flex items-center justify-center">
+        <div className="md:w-1/2 h-56 sm:h-72 md:h-auto bg-slate-950 relative overflow-hidden flex items-center justify-center shrink-0">
           {product.imageUrl ? (
             <img
               src={product.imageUrl}
@@ -40,7 +40,7 @@ export default function ProductModal({ product, isOpen, onClose, onAdd }) {
         </div>
 
         {/* Content Column */}
-        <div className="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+        <div className="md:w-1/2 p-5 sm:p-8 flex flex-col justify-between space-y-4 sm:space-y-6 overflow-y-auto">
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               {out ? (
